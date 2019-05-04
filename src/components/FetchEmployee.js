@@ -61,6 +61,7 @@ class FetchEmployee extends React.Component    {
                         <td>{emp.department}</td>
                         <td>{emp.city}</td>
                         <td>
+                            <button className="action" onClick={(id) => this.handleEdit(emp.employeeId)}>Edit</button>  |  
                             <button className="action" onClick={(id) => this.handleDelete(emp.employeeId)}>Delete</button>
                         </td>
                     </tr>

@@ -1,5 +1,5 @@
 import React from 'react'
-
+import {ReactComponentProps} from 'react-router'
 
 class AddEmployee extends React.Component {
     constructor(props) {
@@ -7,6 +7,7 @@ class AddEmployee extends React.Component {
         this.state = {title: "", loading: false, cityList: [], empData: []}
 
         this.handleSave = this.handleSave.bind(this);
+        this.handleCancel = this.handleCancel.bind(this);
     }
 
     componentWillMount() {
@@ -16,20 +17,22 @@ class AddEmployee extends React.Component {
                 this.setState({cityList: data})
         
         })
+
+        var empid = this.props.match.params["empid"];
+
+        if(empid > 0) {
+            fetch('https://localhost:5001/api/Employee/Details/' + empid)
+                .then(response => response.json()
+                .then(data => {
+                    this.setState({title: "Edit", loading: false, empData: data})
+                }))
+            }
+        else {
+            this.setState({title: "Create", loading: false, cityList: [], empData: []})
+        }
       
     }
 
-    handleSave(event) {
-        event.preventDefault();
-        const data = new FormData(event.target);
-     
-
-        fetch('https://localhost:5001/api/Employee/Create', {
-            method: 'POST',
-            body: data,
-        })
-    
-    }
 
 
 
@@ -37,14 +40,49 @@ class AddEmployee extends React.Component {
         
             let contents = this.state.loading
             ? <p><em>Loading...</em></p> 
-            : this.renderCreateForm()
+            : this.renderCreateForm(this.state.cityList)
 
      return(
             <div>
-               <h3>Add Employee</h3>
+                <h1>{this.state.title}</h1>
+               <h3>Employee</h3>
+               <hr />
                  {contents}
             </div>
         )
+    }
+
+
+    handleSave(event) {
+        event.preventDefault();
+        const data = new FormData(event.target);
+
+        if(this.state.empData.employeeId) {
+            fetch('https://localhost:5001/api/Employee/Edit', {
+                method: 'PUT',
+                body: data,
+            }).then((response) => response.json())
+                .then((responseJson) => {
+                    this.props.history.push("/fetchemployee")
+                })
+            
+        }
+        else {
+            fetch('https://localhost:5001/api/Employee/Create', {
+                method: 'POST',
+                body: data,
+            }).then((response) => response.json())
+            .then((responseJson) => {
+                this.props.history.push("/fetchemployee")
+            })
+        }
+     
+    
+    }
+
+    handleCancel(e) {
+        e.preventDefault()
+        this.props.history.push("/fetchemployee")
     }
 
 
