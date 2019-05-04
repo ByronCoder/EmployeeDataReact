@@ -1,10 +1,10 @@
 import React from 'react'
-import {NavMenu} from './NavMenu'
+import NavMenu from '../components/NavMenu';
 
 
 class Layout extends React.Component {
     render() {
-            return <div className='container-fluid'>
+            return (<div className='container-fluid'>
             <div className='row'>
                 <div className='col-sm-3'>
                     <NavMenu />
@@ -13,7 +13,7 @@ class Layout extends React.Component {
                     {this.props.children}
                 </div>
             </div>
-        </div>;
+        </div>)
     }
 }
 
