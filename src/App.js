@@ -12,9 +12,9 @@ class App extends Component {
     return (
     
         <Router>
-            <div>
+            <div className="topDiv">
               <h2>Welcome to my React CRUD Application</h2>
-              <nav className="nav navbar-expand-lg navbar-light bg-light">
+              <nav className="nav navbar-expand-lg">
               <ul className="navbar-nav mr-auto">
                   <li><Link to={'/'} className="nav-link"> Home </Link></li>
                   <li><Link to={'/addemployee'} className="nav-link">Add Employee</Link></li>
@@ -23,13 +23,14 @@ class App extends Component {
               </ul>
               </nav>
               <hr />
+              </div>
               <Switch>
                     <Route exact path='/' component={Home} />
                     <Route  path='/fetchemployee' component={FetchEmployee} />
                     <Route  path='/addemployee' component={AddEmployee} />
                     <Route  path='/employee/edit:empid' component={AddEmployee} />
               </Switch>
-            </div>
+            
         </Router>
 
       

@@ -31,3 +31,24 @@
     transform: rotate(360deg);
   }
 }
+
+.topDiv {
+  background-color: darkblue;
+  color: red;
+}
+
+.nav-link{
+  color: white;
+}
+
+.employeeForm {
+  padding: 14px;
+}
+
+.titleDiv {
+  padding: 14px;
+}
+
+.actionButtons {
+  margin: 5px;
+}

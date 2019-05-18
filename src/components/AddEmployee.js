@@ -8,6 +8,7 @@ class AddEmployee extends React.Component {
 
         this.handleSave = this.handleSave.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
+        this.updateState = this.updateState.bind(this);
     }
 
     componentWillMount() {
@@ -33,7 +34,9 @@ class AddEmployee extends React.Component {
       
     }
 
-
+    updateState(element) {
+        this.setState({empData: element})
+    }
 
 
     render() {
@@ -43,7 +46,7 @@ class AddEmployee extends React.Component {
             : this.renderCreateForm(this.state.cityList)
 
      return(
-            <div>
+            <div className="titleDiv">
                 <h1>{this.state.title}</h1>
                <h3>Employee</h3>
                <hr />
@@ -88,21 +91,21 @@ class AddEmployee extends React.Component {
 
      renderCreateForm() {
         return (
-            <form onSubmit={this.handleSave}>
+            <form onSubmit={this.handleSave} className="employeeForm">
                 <div className="form-group row">
                     <input type="hidden" name="employeeid" value={this.state.empData.employeeId} />
                 </div>
                 <div className="form-group row">
                     <label className="control-label col-md-12" htmlFor="Name">Name</label>
                     <div className="col-md-4">
-                        <input className="form-control" type="text" name="name" defaultValue={this.state.empData.name} required />
+                        <input className="form-control" type="text" name="name" value={this.state.empData.name} required />
 
                     </div>
                 </div>
                 <div className="form-group row">
                     <label className="control-label col-md-12" htmlFor="Gender">Gender</label>
                     <div className="col-md-4">
-                        <select className="form-control" data-val="true" name="gender" defaultValue={this.state.empData.gender} required>
+                        <select className="form-control" data-val="true" name="gender" value={this.state.empData.gender} onChange={this.updateState} required>
                             <option value="">-- Select Gender --</option>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
@@ -112,13 +115,13 @@ class AddEmployee extends React.Component {
                 <div className="form-group row">
                     <label className="control-label col-md-12" htmlFor="Department">Department</label>
                     <div className="col-md-4">
-                        <input className="form-control" type="text" name="Department" defaultValue={this.state.empData.department} required />
+                        <input className="form-control" type="text" name="Department" value={this.state.empData.department} required />
                     </div>
                 </div>
                 <div className="form-group row">
                     <label className="control-label col-md-12" htmlFor="City">City</label>
                     <div className="col-md-4">
-                        <select className="form-control" data-val="true" name="City" defaultValue={this.state.empData.city} required>
+                        <select className="form-control" data-val="true" name="City" value={this.state.empData.city}  onChange={this.updateState} required>
                             <option value=""> -- Select City --</option>
                             {this.state.cityList.map(city =>
                                 <option key={city.cityId} value={city.cityName}>{city.cityName}</option>

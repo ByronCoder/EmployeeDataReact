@@ -45,7 +45,8 @@ class FetchEmployee extends React.Component    {
         }
     
         render() {
-            return (<div>
+            return (<div className="title">
+                <h1>Employee List</h1>
                 <table className='table'>
                     <tr>
                          <th>Name</th>
@@ -61,8 +62,8 @@ class FetchEmployee extends React.Component    {
                         <td>{emp.department}</td>
                         <td>{emp.city}</td>
                         <td>
-                            <button className="action" onClick={(id) => this.handleEdit(emp.employeeId)}>Edit</button>  |  
-                            <button className="action" onClick={(id) => this.handleDelete(emp.employeeId)}>Delete</button>
+                            <button className="btn btn-link" onClick={(id) => this.handleEdit(emp.employeeId)}>Edit</button>  |  
+                            <button className="btn btn-link" onClick={(id) => this.handleDelete(emp.employeeId)}>Delete</button>
                         </td>
                     </tr>
                  )}
