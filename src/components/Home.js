@@ -5,7 +5,7 @@ class Home extends React.Component {
     render() {
         return (<div className="titleDiv">
             <h1>React Crud Demo</h1>
-            <p>This is a demo of a React Application with CRUD functionality using an ASP.NET Core 2.2 Web Api as a backend with Microsoft SQL Server 2017.</p>
+            <p>This is a demo of a React Application with CRUD functionality using an ASP.NET Core 2.2 Web Api as a backend.</p>
         </div>)
 
     }

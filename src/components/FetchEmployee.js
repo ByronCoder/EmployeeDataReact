@@ -13,13 +13,15 @@ class FetchEmployee extends React.Component    {
     }
   
     componentDidMount() {
-        fetch('https://localhost:5001/api/Employee/Index')
+        console.log(this.state.empList);
+        fetch('https://c5i6dt6na2.execute-api.us-east-1.amazonaws.com/dev/api/Employee/Index')
             .then(response => response.json())
             .then(data => {
         
                 this.setState({empList: data})
+                
             })
-   
+           
         }
 
         handleDelete(id) {
@@ -27,12 +29,12 @@ class FetchEmployee extends React.Component    {
             if(!confirm("Are you sure you want to delete this employee?"))
                 return
             else {
-                fetch('https://localhost:5001/api/Employee/Delete/' + id, {
+                fetch('https://c5i6dt6na2.execute-api.us-east-1.amazonaws.com/dev/api/Employee/Delete/' + id, {
                     method: 'delete'
                 }).then(data => {
                     this.setState({
                         empList: this.state.empList.filter((rec) => {
-                            return (rec.employeeId !== id)
+                            return (rec.id !== id)
                         })
                     })
                 })
@@ -62,8 +64,8 @@ class FetchEmployee extends React.Component    {
                         <td>{emp.department}</td>
                         <td>{emp.city}</td>
                         <td>
-                            <button className="btn btn-link" onClick={(id) => this.handleEdit(emp.employeeId)}>Edit</button>  |  
-                            <button className="btn btn-link" onClick={(id) => this.handleDelete(emp.employeeId)}>Delete</button>
+                            <button className="btn btn-link" onClick={(id) => this.handleEdit(emp.id)}>Edit</button>  |  
+                            <button className="btn btn-link" onClick={(id) => this.handleDelete(emp.id)}>Delete</button>
                         </td>
                     </tr>
                  )}

@@ -12,20 +12,22 @@ class AddEmployee extends React.Component {
     }
 
     componentWillMount() {
-        fetch('https://localhost:5001/api/Employee/GetCityList')
+        fetch('https://c5i6dt6na2.execute-api.us-east-1.amazonaws.com/dev/api/Employee/GetCityList')
             .then(response => response.json())
             .then(data => {
                 this.setState({cityList: data})
         
         })
 
-        var empid = this.props.match.params["empid"];
+        var id = this.props.match.params["id"];
+        console.log(id);
 
-        if(empid > 0) {
-            fetch('https://localhost:5001/api/Employee/Details/' + empid)
+        if(id != null) {
+            fetch('https://c5i6dt6na2.execute-api.us-east-1.amazonaws.com/dev/api/Employee/Details/' + id)
                 .then(response => response.json()
                 .then(data => {
                     this.setState({title: "Edit", loading: false, empData: data})
+                    console.log(this.state.empData.id);
                 }))
             }
         else {
@@ -36,6 +38,7 @@ class AddEmployee extends React.Component {
 
     updateState(element) {
         this.setState({empData: element})
+        console.log(this.state.empData)
     }
 
 
@@ -58,10 +61,13 @@ class AddEmployee extends React.Component {
 
     handleSave(event) {
         event.preventDefault();
-        const data = new FormData(event.target);
-
-        if(this.state.empData.employeeId) {
-            fetch('https://localhost:5001/api/Employee/Edit', {
+        const data = new FormData(event.target)
+        var id = this.props.match.params["id"];
+        console.log(id)
+        if(id != null) {
+            console.log("Editing Employee...")
+            console.log(this.state.empData.id)
+            fetch('https://c5i6dt6na2.execute-api.us-east-1.amazonaws.com/dev/api/Employee/Edit', {
                 method: 'PUT',
                 body: data,
             }).then((response) => response.json())
@@ -71,7 +77,8 @@ class AddEmployee extends React.Component {
             
         }
         else {
-            fetch('https://localhost:5001/api/Employee/Create', {
+            console.log("Create Employee...")
+            fetch('https://c5i6dt6na2.execute-api.us-east-1.amazonaws.com/dev/api/Employee/Create', {
                 method: 'POST',
                 body: data,
             }).then((response) => response.json())
@@ -93,12 +100,12 @@ class AddEmployee extends React.Component {
         return (
             <form onSubmit={this.handleSave} className="employeeForm">
                 <div className="form-group row">
-                    <input type="hidden" name="employeeid" value={this.state.empData.employeeId} />
+                    <input className="form-control displayNone" type="text" name="id" value={this.state.empData.id} />
                 </div>
                 <div className="form-group row">
                     <label className="control-label col-md-12" htmlFor="Name">Name</label>
                     <div className="col-md-4">
-                        <input className="form-control" type="text" name="name" value={this.state.empData.name} required />
+                        <input className="form-control" type="text" name="name" value={this.state.empData.name} onChange={this.updateState} required />
 
                     </div>
                 </div>
@@ -115,16 +122,16 @@ class AddEmployee extends React.Component {
                 <div className="form-group row">
                     <label className="control-label col-md-12" htmlFor="Department">Department</label>
                     <div className="col-md-4">
-                        <input className="form-control" type="text" name="Department" value={this.state.empData.department} required />
+                        <input className="form-control" type="text" name="department" value={this.state.empData.department} onChange={this.updateState} required />
                     </div>
                 </div>
                 <div className="form-group row">
                     <label className="control-label col-md-12" htmlFor="City">City</label>
                     <div className="col-md-4">
-                        <select className="form-control" data-val="true" name="City" value={this.state.empData.city}  onChange={this.updateState} required>
+                        <select className="form-control" data-val="true" name="city" value={this.state.empData.city}  onChange={this.updateState} required>
                             <option value=""> -- Select City --</option>
                             {this.state.cityList.map(city =>
-                                <option key={city.cityId} value={city.cityName}>{city.cityName}</option>
+                                <option key={city.id} value={city.name}>{city.name}</option>
                             )}
                         </select>
                     </div>
